@@ -1,6 +1,12 @@
 # Как использовать?
-календарь MacOS или iOS, Google Calendar
-http://towerinfog.ml/prodcal.ics
+Ссылка на подписной календарь: http://towerinfog.ml/prodcal.ics
+
+### Настройка подписного календаря на iOS
+![Шаг 1](http://towerinfog.ml/guides/iphone-guide.jpg)
+### Настройка подписного календаря на MacOS
+...
+### Настройка подписного календаря в Google Calendar
+...
 
 # Как поднять у себя на сервере
 1. Установить необходимые модули для Python:
