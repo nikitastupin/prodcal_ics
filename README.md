@@ -2,7 +2,7 @@
 Ссылка на подписной календарь: http://towerinfog.ml/prodcal.ics
 
 ### Настройка подписного календаря на iOS
-![Шаг 1](http://towerinfog.ml/guides/iphone-guide.jpg)
+![Шаг 1](doc/iphone-guide.jpg)
 ### Настройка подписного календаря на MacOS
 ...
 ### Настройка подписного календаря в Google Calendar
