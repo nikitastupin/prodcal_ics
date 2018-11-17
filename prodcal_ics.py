@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 from icalendar import Calendar, Event
@@ -121,4 +121,4 @@ if __name__ == "__main__":
     cal = generate_calendar(events)
 
     with open(args.output_file, "w") as f:
-        f.write(cal.to_ical())
+        f.write(cal.to_ical().decode("utf-8"))
