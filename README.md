@@ -10,9 +10,9 @@
 
 # Как поднять у себя на сервере
 1. Установить необходимые модули для Python:
-    1. more_itertools
-    1. icalendar
-    3. lxml
+```
+pip install -r requirements.txt
+```
 1. Настроить автообновление календаря:
 ```
 $ crontab -l
