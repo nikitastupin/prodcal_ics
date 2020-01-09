@@ -1,5 +1,5 @@
 # Как использовать?
-Ссылка на подписной календарь: http://towerinfog.ml/prodcal.ics
+Ссылка на подписной календарь: https://prodcal.nikitastupin.com/prodcal.ics
 
 ### Настройка подписного календаря на iOS
 ![Шаг 1](doc/iphone-guide.jpg)
