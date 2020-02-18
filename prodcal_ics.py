@@ -7,7 +7,6 @@ from lxml import html
 import requests
 import argparse
 import logging
-import os
 
 
 
