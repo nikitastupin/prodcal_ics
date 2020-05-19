@@ -1,5 +1,8 @@
 # Как использовать?
-Ссылка на подписной календарь: https://prodcal.nikitastupin.com/prodcal.ics (http://prodcal.nikitastupin.com/prodcal.ics на случай, если я не обновлю TLS сертификат)
+Ссылка на подписной календарь:
+- https://prodcal.nikitastupin.com/prodcal.ics
+- http://prodcal.nikitastupin.com/prodcal.ics - на случай, если я не обновлю TLS сертификат
+- https://static.nikitastupin.com/prodcal.ics - альтернативная ссылка
 
 ### Настройка подписного календаря на iOS
 ![Шаг 1](doc/iphone-guide.jpg)
