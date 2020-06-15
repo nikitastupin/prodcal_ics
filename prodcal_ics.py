@@ -26,7 +26,7 @@ def get_holidays_grouped_by_months(year):
     holidays = []
 
     for m in months:
-        holidays_in_month = m.xpath(".//td[@class='holiday weekend' or @class='weekend']/text()")
+        holidays_in_month = m.xpath(".//td[@class='holiday weekend' or @class='weekend' or @class='nowork']/text()")
         holidays.append([int(day) for day in holidays_in_month])
 
     return holidays
