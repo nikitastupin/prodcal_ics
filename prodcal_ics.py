@@ -7,6 +7,7 @@ from lxml import html
 import requests
 import argparse
 import logging
+import secrets
 
 
 def get_holidays_grouped_by_months(year):
@@ -42,6 +43,10 @@ def create_dayoff_event(year, month, day_start, day_end):
     event.add(
         "dtend", datetime(year, month, day_end, 0, 0, 0).date() + timedelta(days=1)
     )
+
+    # UID is REQUIRED https://tools.ietf.org/html/rfc5545#section-3.6.1
+    uid = secrets.token_hex(64)
+    event.add("uid", uid)
 
     return event
 
