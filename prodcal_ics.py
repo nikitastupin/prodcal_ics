@@ -9,9 +9,10 @@ import argparse
 import logging
 
 
-
 def get_holidays_grouped_by_months(year):
-    page = requests.get("http://www.consultant.ru/law/ref/calendar/proizvodstvennye/{0}/".format(year))
+    page = requests.get(
+        "http://www.consultant.ru/law/ref/calendar/proizvodstvennye/{0}/".format(year)
+    )
 
     if u"404 Ресурс не найден!" in page.text:
         return None
@@ -26,7 +27,9 @@ def get_holidays_grouped_by_months(year):
     holidays = []
 
     for m in months:
-        holidays_in_month = m.xpath(".//td[@class='holiday weekend' or @class='weekend' or @class='nowork']/text()")
+        holidays_in_month = m.xpath(
+            ".//td[@class='holiday weekend' or @class='weekend' or @class='nowork']/text()"
+        )
         holidays.append([int(day) for day in holidays_in_month])
 
     return holidays
@@ -34,9 +37,11 @@ def get_holidays_grouped_by_months(year):
 
 def create_dayoff_event(year, month, day_start, day_end):
     event = Event()
-    event.add('summary', u'Выходной')
-    event.add('dtstart', datetime(year, month, day_start, 0, 0, 0).date())
-    event.add('dtend', datetime(year, month, day_end, 0, 0, 0).date() + timedelta(days=1))
+    event.add("summary", u"Выходной")
+    event.add("dtstart", datetime(year, month, day_start, 0, 0, 0).date())
+    event.add(
+        "dtend", datetime(year, month, day_end, 0, 0, 0).date() + timedelta(days=1)
+    )
 
     return event
 
@@ -57,20 +62,34 @@ def generate_events(year, holidays_by_months):
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="This script fetches data about production calendar and generates .ics file with it.")
+    parser = argparse.ArgumentParser(
+        description="This script fetches data about production calendar and generates .ics file with it."
+    )
 
     default_output_file = "test.ics"
-    parser.add_argument("-o", dest="output_file",
-        metavar="out", default=default_output_file,
-        help="output file (default: {0})".format(default_output_file))
+    parser.add_argument(
+        "-o",
+        dest="output_file",
+        metavar="out",
+        default=default_output_file,
+        help="output file (default: {0})".format(default_output_file),
+    )
 
-    parser.add_argument("--start-year", metavar="yyyy", type=int,
+    parser.add_argument(
+        "--start-year",
+        metavar="yyyy",
+        type=int,
         default=datetime.today().year,
-        help="year calendar starts (default: current year)")
+        help="year calendar starts (default: current year)",
+    )
 
-    parser.add_argument("--end-year", metavar="yyyy", type=int,
+    parser.add_argument(
+        "--end-year",
+        metavar="yyyy",
+        type=int,
         default=(datetime.today().year + 1),
-        help="year calendar ends (default: next year)")
+        help="year calendar ends (default: next year)",
+    )
 
     parser.add_argument("--log-level", metavar="level", default="INFO")
     parser.add_argument("--log-file", metavar="file", default="prodcal_ics.log")
@@ -80,8 +99,8 @@ def parse_args():
 
 def generate_calendar(events):
     cal = Calendar()
-    cal.add('prodid', '-//My calendar product//mxm.dk//')
-    cal.add('version', '2.0')
+    cal.add("prodid", "-//My calendar product//mxm.dk//")
+    cal.add("version", "2.0")
     cal.add("NAME", "Производственный календарь")
     cal.add("X-WR-CALNAME", "Производственный календарь")
 
@@ -97,9 +116,12 @@ def setup_logging(log_file, log_level):
     if not isinstance(logging_level, int):
         raise ValueError("Invalid log level: {0}".format(log_level))
 
-    logging.basicConfig(filename=log_file, level=logging_level,
-        format="%(asctime)s [%(levelname)s] %(message)s", datefmt="[%d/%m/%Y:%H:%M:%S %z]")
-
+    logging.basicConfig(
+        filename=log_file,
+        level=logging_level,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+        datefmt="[%d/%m/%Y:%H:%M:%S %z]",
+    )
 
 
 if __name__ == "__main__":
