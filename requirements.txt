@@ -2,7 +2,7 @@ certifi==2019.6.16
 chardet==3.0.4
 icalendar==4.0.3
 idna==2.8
-lxml==4.4.0
+lxml==4.6.2
 more-itertools==7.2.0
 python-dateutil==2.8.0
 pytz==2019.2
