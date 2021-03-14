@@ -16,6 +16,8 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get install build-dep python3-lxml
+          python3 -c 'import lxml'
+          python -c 'import lxml'
           python3 -m pip install -r requirements.txt
       - name: Fetch data and produce prodcal.ics
         run: python3 prodcal_ics.py --start-year=2018 -o /tmp/prodcal.ics
