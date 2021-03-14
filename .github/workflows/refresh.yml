@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/setup-python@v2
         with:
           python-version: 3.8
       - name: Install dependencies
         run: |
-          sudo apt-get install build-dep python3-lxml
+          sudo apt-get install python3-lxml
           python3 -c 'import lxml'
           python -c 'import lxml'
-          python3 -m pip install -r requirements.txt
+          python3 -m pip install icalendar requests
       - name: Fetch data and produce prodcal.ics
         run: python3 prodcal_ics.py --start-year=2018 -o /tmp/prodcal.ics
       - uses: actions/upload-artifact@v2
