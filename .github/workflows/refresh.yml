@@ -17,9 +17,9 @@ jobs:
         run: |
           sudo apt-get install python3-lxml
           # Not using '-r requirements.txt' here because 'python3-lxml' installed above
-          python -m pip install icalendar requests
+          python3 -m pip install icalendar requests
       - name: Fetch data and produce prodcal.ics
-        run: python prodcal_ics.py --start-year=2018 -o /tmp/prodcal.ics
+        run: python3 prodcal_ics.py --start-year=2018 -o /tmp/prodcal.ics
       - uses: actions/upload-artifact@v2
         with:
           name: prodcal.ics
