@@ -1,8 +1,8 @@
 name: Refresh ICS file
 
 on:
-  # schedule:
-  #   - cron: '25 12 * * *'
+  schedule:
+     - cron: '37 13 * * *'
   workflow_dispatch:
 
 jobs:
