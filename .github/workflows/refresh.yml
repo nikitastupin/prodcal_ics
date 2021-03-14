@@ -15,9 +15,9 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          sudo apt-get install libxml2-dev libxmlsec1-dev
-          pip install -r requirements.txt
+          sudo apt-get install python3-lxml
+          # Not using '-r requirements.txt' here because 'python3-lxml' installed above
+          python -m pip install icalendar requests
       - name: Fetch data and produce prodcal.ics
         run: python prodcal_ics.py --start-year=2018 -o /tmp/prodcal.ics
       - uses: actions/upload-artifact@v2
