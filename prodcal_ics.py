@@ -15,15 +15,14 @@ def get_holidays_grouped_by_months(year):
         "http://www.consultant.ru/law/ref/calendar/proizvodstvennye/{0}/".format(year)
     )
 
-    if u"404 Ресурс не найден!" in page.text:
+    if "404 Ресурс не найден!" in page.text:
         return None
 
     tree = html.fromstring(page.content)
     months = tree.xpath("//th[@class='month']/../../..")
 
     if len(months) != 12:
-        logging.error("Number of months don't equal to 12. Program terminated.")
-        exit(1)
+        logging.warning(f"Number of months in {year} don't equal to 12")
 
     holidays = []
 
@@ -38,7 +37,7 @@ def get_holidays_grouped_by_months(year):
 
 def create_dayoff_event(year, month, day_start, day_end):
     event = Event()
-    event.add("summary", u"Выходной")
+    event.add("summary", "Выходной")
     event.add("dtstart", datetime(year, month, day_start, 0, 0, 0).date())
     event.add(
         "dtend", datetime(year, month, day_end, 0, 0, 0).date() + timedelta(days=1)
@@ -97,7 +96,6 @@ def parse_args():
     )
 
     parser.add_argument("--log-level", metavar="level", default="INFO")
-    parser.add_argument("--log-file", metavar="file", default="prodcal_ics.log")
 
     return parser.parse_args()
 
@@ -115,14 +113,13 @@ def generate_calendar(events):
     return cal
 
 
-def setup_logging(log_file, log_level):
+def setup_logging(log_level):
     logging_level = getattr(logging, log_level.upper(), None)
 
     if not isinstance(logging_level, int):
         raise ValueError("Invalid log level: {0}".format(log_level))
 
     logging.basicConfig(
-        filename=log_file,
         level=logging_level,
         format="%(asctime)s [%(levelname)s] %(message)s",
         datefmt="[%d/%m/%Y:%H:%M:%S %z]",
@@ -131,7 +128,7 @@ def setup_logging(log_file, log_level):
 
 if __name__ == "__main__":
     args = parse_args()
-    setup_logging(args.log_file, args.log_level)
+    setup_logging(args.log_level)
 
     events = []
 
