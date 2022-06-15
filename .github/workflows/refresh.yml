@@ -10,14 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt-get install libxml2-dev libxslt-dev
       - uses: actions/setup-python@v2
         with:
           python-version: 3.8
           cache: 'pip'
-      - name: Install dependencies
-        run: |
-          sudo apt-get install libxml2-dev libxslt-dev
-          python -m pip install -r requirements.txt
+      - run: pip install -r requirements.txt
       - name: Fetch data and produce prodcal.ics
         run: python prodcal_ics.py --start-year=2018 -o /tmp/prodcal.ics
       - uses: actions/upload-artifact@v2
