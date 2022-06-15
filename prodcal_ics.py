@@ -2,34 +2,44 @@
 # -*- coding: utf-8 -*-
 
 from icalendar import Calendar, Event
-from datetime import datetime, timedelta
 from lxml import html
 import requests
+
+from datetime import datetime, timedelta
 import argparse
 import logging
-import secrets
+import hashlib
 
 
 def get_holidays_grouped_by_months(year):
-    page = requests.get(
-        "http://www.consultant.ru/law/ref/calendar/proizvodstvennye/{0}/".format(year)
-    )
+    url = f"https://hh.ru/article/calendar{year}"
 
-    if "404 Ресурс не найден!" in page.text:
+    logging.info(url)
+
+    headers = {"User-Agent": "curl/7.68.0"}
+
+    page = requests.get(url, headers=headers, allow_redirects=True)
+
+    if page.status_code == 404:
         return None
 
     tree = html.fromstring(page.content)
-    months = tree.xpath("//th[@class='month']/../../..")
+    months = tree.xpath(
+        "//div[@class='calendar-list__item__title' or @class='calendar-list__item-title']/.."
+    )
 
     if len(months) != 12:
-        logging.warning(f"Number of months in {year} don't equal to 12")
+        raise Exception(
+            f"len(months) ({year} year) must be equal to 12, actual: {len(months)}"
+        )
 
     holidays = []
 
     for m in months:
         holidays_in_month = m.xpath(
-            ".//td[@class='holiday weekend' or @class='weekend' or @class='nowork']/text()"
+            ".//li[@class='calendar-list__numbers__item calendar-list__numbers__item_day-off']/text()"
         )
+        holidays_in_month = [day.strip() for day in holidays_in_month if day.strip()]
         holidays.append([int(day) for day in holidays_in_month])
 
     return holidays
@@ -44,7 +54,9 @@ def create_dayoff_event(year, month, day_start, day_end):
     )
 
     # UID is REQUIRED https://tools.ietf.org/html/rfc5545#section-3.6.1
-    uid = secrets.token_hex(64)
+    uid = hashlib.sha256(
+        "{year}{month}{day_start}{day_end}".encode("ascii")
+    ).hexdigest()
     event.add("uid", uid)
 
     return event
