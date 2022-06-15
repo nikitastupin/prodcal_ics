@@ -55,7 +55,7 @@ def create_dayoff_event(year, month, day_start, day_end):
 
     # UID is REQUIRED https://tools.ietf.org/html/rfc5545#section-3.6.1
     uid = hashlib.sha512(
-        "{year}{month}{day_start}{day_end}".encode("ascii")
+        f"{year}{month}{day_start}{day_end}".encode("ascii")
     ).hexdigest()
     event.add("uid", uid)
 
