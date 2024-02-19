@@ -37,7 +37,7 @@ def get_holidays_grouped_by_months(year):
 
     for m in months:
         holidays_in_month = m.xpath(
-            ".//li[@class='calendar-list__numbers__item calendar-list__numbers__item_day-off']/text()"
+            ".//li[contains(@class, 'calendar-list__numbers__item_day-off')]/text()"
         )
         holidays_in_month = [day.strip() for day in holidays_in_month if day.strip()]
         holidays.append([int(day) for day in holidays_in_month])
