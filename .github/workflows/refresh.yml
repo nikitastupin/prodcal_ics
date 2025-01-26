@@ -9,17 +9,17 @@ jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Install dependencies
         run: sudo apt-get install libxml2-dev libxslt-dev
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.8
           cache: 'pip'
       - run: pip install -r requirements.txt
       - name: Fetch data and produce prodcal.ics
         run: python prodcal_ics.py --start-year=2018 -o /tmp/prodcal.ics
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: prodcal.ics
           path: /tmp/prodcal.ics
@@ -28,11 +28,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: fetch
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           ref: gh-pages
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4
         with:
           name: prodcal.ics
 
